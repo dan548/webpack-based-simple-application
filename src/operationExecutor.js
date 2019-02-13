@@ -36,7 +36,9 @@ class OperationExecutor {
     /**
      * Place your code here
      */
-    return null /* variable with result */;
+    let clone = Object.assign({}, arg);
+    clone['obj1']['firstName'] = "ab";
+    return clone /* variable with result */;
   }
 
   /**
@@ -49,7 +51,7 @@ class OperationExecutor {
     /**
      * Place your code here
      */
-    return null /* variable with result */;
+    return Object.assign({}, arg['obj1'], arg['obj2']) /* variable with result */;
   }
 
   /**
@@ -62,7 +64,12 @@ class OperationExecutor {
     /**
      * Place your code here
      */
-    return null /* variable with result */;
+    const addGender = (arr) => arr.map(function (man) {
+      man['gender'] = 'female';
+      return man;
+    });
+    addGender(arg['obj1']['relatives']);
+    return arg /* variable with result */;
   }
 
   /**
