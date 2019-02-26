@@ -51,7 +51,12 @@ class OperationExecutor {
     /**
      * Place your code here
      */
-    return Object.assign({}, arg['obj1'], arg['obj2']) /* variable with result */;
+    let clone = Object.assign({}, arg['obj1'], arg['obj2']);
+    let result = Object.assign({});
+    result['clone'] = clone;
+    result['obj1'] = arg['obj1'];
+    result['obj2'] = arg['obj2'];
+    return result;
   }
 
   /**
@@ -65,7 +70,11 @@ class OperationExecutor {
      * Place your code here
      */
     const addGender = (arr) => arr.map(function (man) {
-      man['gender'] = 'female';
+      if (man['lastName'] === 'Ivanova') {
+        man['gender'] = 'female';
+      } else {
+        man['gender'] = 'male';
+      }
       return man;
     });
     addGender(arg['obj1']['relatives']);
@@ -82,7 +91,11 @@ class OperationExecutor {
     /**
      * Place your code here
      */
-    return null /* variable with result */;
+    const female = arg['obj1']['relatives'].filter(human => human['gender'] === 'female');
+    const greet = (arr) => arr.map(function (man) {
+      return `Hello, ${man['firstName']} ${man['lastName']}!`;
+    });
+    return greet(female) /* variable with result */;
   }
 
   /**
@@ -95,7 +108,9 @@ class OperationExecutor {
     /**
      * Place your code here
      */
-    return '';
+    let x = document.getElementsByClassName(arg['className']);
+    x[0].style.backgroundColor = arg['color'];
+    return `${x[0].className} ${x[0].style.backgroundColor}`;
   }
 
   /**
@@ -108,7 +123,8 @@ class OperationExecutor {
     /**
      * Place your code here
      */
-    return null;
+    const hosts = arg['hostNames'].filter(host => host === location.hostname);
+    return Object.assign({}, [hosts]);
   }
 
   /**
@@ -121,7 +137,13 @@ class OperationExecutor {
     /**
      * Place your code here
      */
-    return null;
+    for (let x in arg) {
+      if (arg.hasOwnProperty(x)) {
+        arg[ arg[x] ] = x;
+        delete(arg[x]);
+      }
+    }
+    return arg;
   }
 
   /**
@@ -134,7 +156,15 @@ class OperationExecutor {
     /**
      * Place your code here
      */
-    return null;
+    let clone = [...arg['arr1'], ...arg['arr2']];
+    let result = Object.assign({});
+    for (let i = 0; i < (clone.length + 1) / 2; i++) {
+      result[ clone[i * 2] ] = clone[i * 2 + 1];
+    }
+    if (clone.length % 2 === 1) {
+      result[ clone[clone.length - 1] ] = "null";
+    }
+    return result;
   }
 
   /**
@@ -147,7 +177,12 @@ class OperationExecutor {
     /**
      * Place your code here
      */
-    return null;
+    let result = Object.assign({});
+
+    for (let i = 0; i < arg['users'].length; i++) {
+      result [ arg['users'][i]['id'] ] = arg['users'][i];
+    }
+    return result;
   }
 
   /**
@@ -160,7 +195,14 @@ class OperationExecutor {
     /**
      * Place your code here
      */
-    return null;
+    let x = document.getElementsByClassName(arg['className'])[0].children;
+    for (let i = 0; i < x.length; i++) {
+      arg['childrenInfo'].push({
+        tagName: x[i].tagName,
+        className: x[i].className,
+      });
+    }
+    return arg;
   }
 }
 
